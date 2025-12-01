@@ -25,7 +25,11 @@ BANK_NAMES = {
 
 # Scraping Configuration
 SCRAPING_CONFIG = {
-    'reviews_per_bank': int(os.getenv('REVIEWS_PER_BANK', 500)),
+    'reviews_per_bank': {
+        'CBE': 8300,
+        'Abyssinia': 1200,
+        'Dashen': 770
+    },
     'max_retries': int(os.getenv('MAX_RETRIES', 3)),
     'lang': 'en',
     'country': 'et'  # Ethiopia
@@ -37,8 +41,9 @@ DATA_PATHS = {
     'processed': '../data/processed',
     'raw_reviews': '../data/raw/reviews_raw.csv',
     'processed_reviews': '../data/processed/reviews_processed.csv',
-     'sentiment_prepared': '../data/processed/reviews_for_sentiment.csv',
+     'theme_prepared': '../data/processed/reviews_for_theme.csv',
     'sentiment_results': '../data/processed/reviews_with_sentiment.csv',
+    'theme_results': '../data/processed/reviews_with_themes.csv',
     'final_results': '../data/processed/reviews_final.csv'
 }
 

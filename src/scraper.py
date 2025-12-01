@@ -154,7 +154,7 @@ class PlayStoreScraper:
         # Use tqdm to show a progress bar for the banks
         for bank_code, app_id in tqdm(self.app_ids.items(), desc="Banks"):
             # Fetch the reviews
-            reviews_data = self.scrape_reviews(app_id, self.reviews_per_bank)
+            reviews_data = self.scrape_reviews(app_id, self.reviews_per_bank[bank_code])
 
             if reviews_data:
                 # Process and format the data
