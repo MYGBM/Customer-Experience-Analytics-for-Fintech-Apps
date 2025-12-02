@@ -46,8 +46,13 @@ DATA_PATHS = {
     'sentiment_results': '../data/processed/reviews_with_sentiment.csv',
     'sentiment_results_bert': '../data/processed/reviews_with_sentiment_bert.csv',
     'theme_results': '../data/processed/reviews_with_themes.csv',
-    'final_results': '../data/processed/reviews_final.csv'
+    'theme_results_lda': '../data/processed/reviews_with_themes_lda.csv',
+    'final_results': '../data/processed/reviews_final.csv',
+    "theme_analysis": "../data/processed/theme_analysis.csv"
 }
+
+# Visualization Style
+PLOT_STYLE = 'seaborn-v0_8'
 
 
 
