@@ -41,8 +41,10 @@ DATA_PATHS = {
     'processed': '../data/processed',
     'raw_reviews': '../data/raw/reviews_raw.csv',
     'processed_reviews': '../data/processed/reviews_processed.csv',
-     'theme_prepared': '../data/processed/reviews_for_theme.csv',
+    # it looks as if theme_prepared is not really being used for sentiment analysis but we wukk just keep in case because vader uses the raw processed data and bert does it's own preprocessing maybe it might be used for topic modelling but highly unlikely since spacy will most liekly be used there
+    'theme_prepared': '../data/processed/reviews_for_theme.csv',
     'sentiment_results': '../data/processed/reviews_with_sentiment.csv',
+    'sentiment_results_bert': '../data/processed/reviews_with_sentiment_bert.csv',
     'theme_results': '../data/processed/reviews_with_themes.csv',
     'final_results': '../data/processed/reviews_final.csv'
 }
