@@ -33,7 +33,7 @@ class SentimentAnalysis:
             output_path (str): Path to save final sentiment results
         """
         self.input_path = input_path or DATA_PATHS['processed_reviews']
-        self.prepared_path = prepared_path or DATA_PATHS['sentiment_prepared']
+        self.prepared_path = prepared_path or DATA_PATHS['theme_prepared']
         self.output_path = output_path or DATA_PATHS['sentiment_results']
         self.df = None
         self.sia = None
@@ -101,7 +101,7 @@ class SentimentAnalysis:
 
         # Apply preprocessing
         print("Applying tokenization, stopword removal, and lemmatization...")
-        self.df['sentiment_prepared_text'] = self.df['review_text'].apply(process_text)
+        self.df['theme_prepared_text'] = self.df['review_text'].apply(process_text)
         
         # Save intermediate data
         try:

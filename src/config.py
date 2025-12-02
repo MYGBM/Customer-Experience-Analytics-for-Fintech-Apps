@@ -25,7 +25,11 @@ BANK_NAMES = {
 
 # Scraping Configuration
 SCRAPING_CONFIG = {
-    'reviews_per_bank': int(os.getenv('REVIEWS_PER_BANK', 500)),
+    'reviews_per_bank': {
+        'CBE': 8300,
+        'Abyssinia': 1200,
+        'Dashen': 770
+    },
     'max_retries': int(os.getenv('MAX_RETRIES', 3)),
     'lang': 'en',
     'country': 'et'  # Ethiopia
@@ -37,10 +41,18 @@ DATA_PATHS = {
     'processed': '../data/processed',
     'raw_reviews': '../data/raw/reviews_raw.csv',
     'processed_reviews': '../data/processed/reviews_processed.csv',
-     'sentiment_prepared': '../data/processed/reviews_for_sentiment.csv',
+    # it looks as if theme_prepared is not really being used for sentiment analysis but we wukk just keep in case because vader uses the raw processed data and bert does it's own preprocessing maybe it might be used for topic modelling but highly unlikely since spacy will most liekly be used there
+    'theme_prepared': '../data/processed/reviews_for_theme.csv',
     'sentiment_results': '../data/processed/reviews_with_sentiment.csv',
-    'final_results': '../data/processed/reviews_final.csv'
+    'sentiment_results_bert': '../data/processed/reviews_with_sentiment_bert.csv',
+    'theme_results': '../data/processed/reviews_with_themes.csv',
+    'theme_results_lda': '../data/processed/reviews_with_themes_lda.csv',
+    'final_results': '../data/processed/reviews_final.csv',
+    "theme_analysis": "../data/processed/theme_analysis.csv"
 }
+
+# Visualization Style
+PLOT_STYLE = 'seaborn-v0_8'
 
 
 
