@@ -58,16 +58,17 @@ class ThemeAnalyzerLDA:
             return ""
         
         # 1. Lowercase & Remove special chars
-        text = re.sub(r'[^a-zA-Z\s]', '', text.lower())
+        #updated the regex  to replace special characters with space
+        text = re.sub(r'[^a-zA-Z\s]', ' ', text.lower())
         
         # 2. Tokenize
-        tokens = text.split()
+        tokens = nltk.word_tokenize(text)
         
         # 3. Remove Stopwords & Lemmatize
         clean_tokens = [
             self.lemmatizer.lemmatize(word) 
             for word in tokens 
-            if word not in self.stop_words and len(word) > 2
+            if word.isalpha() and word not in self.stop_words and len(word) > 2
         ]
         
         return " ".join(clean_tokens)
