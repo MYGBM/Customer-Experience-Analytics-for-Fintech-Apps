@@ -30,6 +30,8 @@ class ThemeAnalyzer:
     def __init__(self):
         self.lemmatizer = WordNetLemmatizer()
         self.stop_words = set(stopwords.words('english'))
+        # Add domain specific stopwords
+        self.stop_words.update(['app', 'bank', 'mobile', 'banking', 'ethiopia', 'please', 'thank', 'thanks'])
         
         # Define Rule-Based Themes (Keywords mapped to Themes)
         # We use stems/lemmas here (e.g., 'login' covers 'logins', 'logging')
@@ -52,7 +54,7 @@ class ThemeAnalyzer:
             'User Interface (UI/UX)': [
                 'interface', 'design', 'look', 'easy', 'simple', 'hard', 'confusing', 
                 'navigate', 'user friendly', 'layout', 'color', 'font', 'language', 
-                'english', 'amharic', 'menu', 'button', 'screen', 'dark'
+                'english', 'amharic', 'menu', 'button', 'screen', 'dark', "ui", "ux"
             ],
             'Customer Service': [
                 'support', 'service', 'customer', 'agent', 'staff', 'branch', 'call', 
@@ -80,16 +82,17 @@ class ThemeAnalyzer:
             return ""
         
         # 1. Lowercase & Remove special chars
-        text = re.sub(r'[^a-zA-Z\s]', '', text.lower())
+        #updated the regex  to replace special characters with space
+        text = re.sub(r'[^a-zA-Z\s]', ' ', text.lower())
         
         # 2. Tokenize
-        tokens = text.split()
+        tokens = nltk.word_tokenize(text)
         
         # 3. Remove Stopwords & Lemmatize
         clean_tokens = [
             self.lemmatizer.lemmatize(word) 
             for word in tokens 
-            if word not in self.stop_words and len(word) > 2
+            if word.isalpha() and word not in self.stop_words and len(word) > 2
         ]
         
         return " ".join(clean_tokens)
