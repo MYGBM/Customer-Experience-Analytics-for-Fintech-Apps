@@ -32,7 +32,7 @@ This report documents the complete lifecycle of the "Customer Experience Analyti
 *   **Data Pipeline:** Successfully scraped and processed over 10,000 reviews for CBE, Abyssinia, and Dashen Bank.
 *   **Advanced Analytics:** Implemented a dual-model sentiment analysis system (VADER + BERT) and a dual-approach thematic analysis system (Rule-Based + LDA Topic Modeling).
 *   **Actionable Insights:** Identified "Technical Stability" and "Login Issues" as the primary churn drivers, while "Ease of Use" remains the strongest retention driver.
-*   **Visualization:** Delivered interactive dashboards and static reports (Word Clouds, Heatmaps, Topic Distributions) to visualize the "Voice of the Customer."
+
 
 ---
 
