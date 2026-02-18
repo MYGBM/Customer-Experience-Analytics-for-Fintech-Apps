@@ -124,10 +124,10 @@ class ThemeAnalyzer:
         print("Loading data...")
         # Load the BERT sentiment results (most recent/accurate data)
         try:
-            df = pd.read_csv(DATA_PATHS.get('sentiment_results_bert', DATA_PATHS['sentiment_results']))
+            df = pd.read_csv(DATA_PATHS.get('sentiment_results_bert', DATA_PATHS['sentiment_results_bert']))
         except FileNotFoundError:
             print("BERT results not found, falling back to VADER results...")
-            df = pd.read_csv(DATA_PATHS['sentiment_results'])
+            df = pd.read_csv(DATA_PATHS['sentiment_results_bert'])
 
         print(f"Preprocessing {len(df)} reviews (Lemmatization)...")
         # Create a temporary column for clean text to use in analysis

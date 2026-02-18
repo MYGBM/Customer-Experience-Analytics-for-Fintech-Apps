@@ -1,10 +1,9 @@
 """
-Sentiment Analysis Module
+Sentiment Analysis Module (VADER)
 Task 2: Sentiment Analysis Pipeline
 
-This script performs sentiment analysis on the preprocessed reviews.
-- Tokenization, Lemmatization, Stopword Removal
-- VADER Sentiment Analysis
+This script performs sentiment analysis on the preprocessed reviews using VADER.
+VADER works best on raw text — it handles emojis, capitalization, and punctuation natively.
 """
 
 import sys
@@ -12,29 +11,26 @@ import os
 import pandas as pd
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
 
 # Add parent directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.config import DATA_PATHS
+from src.sentiment_evaluation import evaluate_sentiment
+
 
 class SentimentAnalysis:
     """Pipeline for sentiment analysis using NLTK VADER"""
 
-    def __init__(self, input_path=None, prepared_path=None, output_path=None):
+    def __init__(self, input_path=None, output_path=None):
         """
         Initialize the sentiment analysis pipeline
         
         Args:
             input_path (str): Path to processed reviews CSV
-            prepared_path (str): Path to save intermediate prepared data
             output_path (str): Path to save final sentiment results
         """
         self.input_path = input_path or DATA_PATHS['processed_reviews']
-        self.prepared_path = prepared_path or DATA_PATHS['theme_prepared']
-        self.output_path = output_path or DATA_PATHS['sentiment_results']
+        self.output_path = output_path or DATA_PATHS['sentiment_results_vader']
         self.df = None
         self.sia = None
 
@@ -52,71 +48,13 @@ class SentimentAnalysis:
             print(f"ERROR: Failed to load data: {str(e)}")
             return False
 
-    def preprocess_for_sentiment(self):
-        """
-        Perform text preprocessing for sentiment analysis context:
-        1. Tokenization
-        2. Stopword removal
-        3. Lemmatization
-        
-        Saves the result to sentiment_prepared path.
-        """
-        print("\n[1/2] Preprocessing for sentiment analysis...")
-        
-        # Download necessary NLTK data
-        try:
-            nltk.data.find('tokenizers/punkt')
-            nltk.data.find('corpora/stopwords')
-            nltk.data.find('corpora/wordnet')
-            nltk.data.find('corpora/omw-1.4')
-        except LookupError:
-            print("Downloading NLTK resources...")
-            nltk.download('punkt')
-            nltk.download('stopwords')
-            nltk.download('wordnet')
-            nltk.download('omw-1.4')
-
-        lemmatizer = WordNetLemmatizer()
-        stop_words = set(stopwords.words('english'))
-        # Keep negation words
-        for w in ['not', 'no', 'nor']:
-            stop_words.discard(w)
-
-        def process_text(text):
-            if pd.isna(text):
-                return ""
-            
-            # Tokenize
-            # Ensure text is string and lowercased
-            tokens = word_tokenize(str(text).lower())
-            
-            # Remove stopwords and non-alphabetic tokens, then lemmatize
-            clean_tokens = [
-                lemmatizer.lemmatize(word) 
-                for word in tokens 
-                if word.isalpha() and word not in stop_words
-            ]
-            
-            return " ".join(clean_tokens)
-
-        # Apply preprocessing
-        print("Applying tokenization, stopword removal, and lemmatization...")
-        self.df['theme_prepared_text'] = self.df['review_text'].apply(process_text)
-        
-        # Save intermediate data
-        try:
-            os.makedirs(os.path.dirname(self.prepared_path), exist_ok=True)
-            self.df.to_csv(self.prepared_path, index=False)
-            print(f"Prepared data saved to: {self.prepared_path}")
-        except Exception as e:
-            print(f"WARNING: Failed to save prepared data: {str(e)}")
-
     def analyze_sentiment(self):
         """
         Perform sentiment analysis using VADER.
+        VADER runs on raw review_text — no preprocessing needed.
         Adds 'sentiment_score' and 'sentiment_label'.
         """
-        print("\n[2/2] Running VADER Sentiment Analysis...")
+        print("\n[1/3] Running VADER Sentiment Analysis...")
         
         # Download VADER lexicon
         try:
@@ -128,7 +66,6 @@ class SentimentAnalysis:
 
         def get_vader_score(text):
             # VADER works best on raw text (handles emojis, caps, etc.)
-            # So we use the original 'review_text' instead of the processed one
             return self.sia.polarity_scores(str(text))['compound']
 
         def get_sentiment_label(score):
@@ -150,9 +87,23 @@ class SentimentAnalysis:
         print("\nSentiment Distribution:")
         print(self.df['sentiment_label'].value_counts(normalize=True) * 100)
 
+        # Per-bank sentiment summary
+        if 'bank_name' in self.df.columns and 'rating' in self.df.columns:
+            print("\nPer-Bank Mean Sentiment Score by Star Rating:")
+            summary = self.df.groupby(['bank_name', 'rating'])['sentiment_score'].mean().unstack(fill_value=0)
+            print(summary.round(3))
+
+    def evaluate(self):
+        """Evaluate sentiment predictions against star-rating ground truth."""
+        print("\n[2/3] Evaluating sentiment predictions...")
+        if 'rating' not in self.df.columns:
+            print("WARNING: 'rating' column not found — skipping evaluation.")
+            return
+        return evaluate_sentiment(self.df, model_name="VADER")
+
     def save_results(self):
         """Save final sentiment results"""
-        print("\nSaving sentiment results...")
+        print("\n[3/3] Saving sentiment results...")
         try:
             os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
             self.df.to_csv(self.output_path, index=False)
@@ -165,17 +116,17 @@ class SentimentAnalysis:
     def run_pipeline(self):
         """Run the full sentiment analysis pipeline"""
         print("="*60)
-        print("STARTING SENTIMENT ANALYSIS PIPELINE")
+        print("STARTING VADER SENTIMENT ANALYSIS PIPELINE")
         print("="*60)
         
         if not self.load_data():
             return False
             
-        self.preprocess_for_sentiment()
         self.analyze_sentiment()
+        self.evaluate()
         
         if self.save_results():
-            print("\n✓ Sentiment analysis completed successfully!")
+            print("\n✓ VADER sentiment analysis completed successfully!")
             return True
         else:
             print("\n✗ Sentiment analysis failed during save.")

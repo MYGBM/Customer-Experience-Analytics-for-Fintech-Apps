@@ -76,10 +76,10 @@ class ThemeAnalyzerLDA:
     def run_analysis(self):
         print("Loading data...")
         try:
-            df = pd.read_csv(DATA_PATHS.get('sentiment_results', DATA_PATHS['sentiment_results']))
+            df = pd.read_csv(DATA_PATHS.get('sentiment_results_vader', DATA_PATHS['sentiment_results_vader']))
         except FileNotFoundError:
-            print("BERT results not found, falling back to VADER results...")
-            df = pd.read_csv(DATA_PATHS['sentiment_results'])
+            print("VADER results not found, falling back to processed reviews...")
+            df = pd.read_csv(DATA_PATHS['processed_reviews'])
 
         # Drop NaNs
         df = df.dropna(subset=['review_text'])
