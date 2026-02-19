@@ -57,6 +57,21 @@ Impact: The massive improvement in Negative Recall is critical. It means the vas
 Visual Evidence:
 
 [Placeholder: Comparative Bar Chart - VADER vs. RoBERTa Accuracy & Recall] The chart would show a side-by-side comparison highlighting the drastic jump in detecting negative sentiment.
+3.2.1 Evaluation Protocol & Ground Truth Generation
+To rigorously benchmark the models, a standardized evaluation framework was implemented (source: `src/sentiment_evaluation.py`).
+
+**1. Constructing Ground Truth:**
+Since raw reviews lack explicit sentiment labels, "Star Ratings" were used as a proxy to generate Ground Truth labels:
+
+- **Negative:** 1 & 2 Stars (The primary target for complaint detection)
+- **Neutral:** 3 Stars
+- **Positive:** 4 & 5 Stars
+
+**2. Key Success Metrics:**
+Beyond standard **Accuracy**, the evaluation prioritized two specific metrics aligned with business goals:
+
+- **Negative Recall:** The percentage of _actual_ negative reviews correctly flagged by the model. This is the critical "Safety Metric"—a high negative recall ensures that customer complaints are not ignored.
+- **Score-Rating Correlation:** A Pearson correlation analysis was run to measure how linearly the sentiment scores tracked with the user's star rating, vetting the model's granularity.
 
 4. Thematic Analysis: Uncovering the "Why"
    Knowing that users are unhappy is not enough; the "why" must be understood. Latent Dirichlet Allocation (LDA), an unsupervised machine learning technique, was employed to discover the hidden thematic structures within the reviews.
@@ -67,7 +82,22 @@ Instead of a "one size fits all" model, separate LDA models were trained for eac
 Abyssinia: Optimal Topics = 8 (High complexity, diverse feedback)
 CBE: Optimal Topics = 5 (Focused on core banking functions)
 Dashen: Optimal Topics = 3 (Concentrated feedback on specific features)
-4.2 Key Themes & Keywords
+4.2 Topic Interpretation & Theming Strategy
+While LDA provides mathematical clusters of words (Topics), these raw outputs often contain generic or overlapping terms (e.g., "work", "time", "app"). To transform these statistical clusters into actionable business insights, a rigorous qualitative layer was applied: `High-Confidence Sample Review Reading`.
+
+**Methodology:**
+
+1.  **High-Confidence Filtering:** For each latent topic identified by the model, we extracted the **top 10 reviews** where the model's confidence probability ($P(Topic|Document)$) was highest ($> 0.90$). These reviews represent the "purest" expression of that topic.
+2.  **Targeted Review Reading:** Instead of guessing the topic's meaning from keywords alone, I manually read these high-confidence reviews to understand the _context_ of the complaint.
+    - _Example:_ A topic with keywords "security" and "option" might seem vague. Reading the high-confidence reviews revealed specific frustration: _"The app blocks me because of 'Developer Options' even when they are disabled."_
+3.  **Labeling & Grouping:**
+    - **Step 1 - Labeling:** Each numerical topic (e.g., Topic 2) was assigned a descriptive label based on the human review (e.g., "Developer Options Blocking").
+    - **Step 2 - Theming:** Related topics were then aggregated into broad **Themes** to simplify reporting.
+      - _Logic:_ (Topic 0 "Login Failure") + (Topic 3 "OTP Issues") $\rightarrow$ **Theme: "Authentication & Security"**.
+
+This "Human-in-the-Loop" validation ensures that the reported themes—such as "Update-Induced Instability" or "Super App Experience"—are not just keyword associations, but accurately reflect the nuanced voice of the customer.
+
+4.3 Key Themes & Keywords
 The model successfully extracted distinct thematic clusters. Below are the dominant themes identified for each bank, along with their top defining keywords.
 
 Commercial Bank of Ethiopia (CBE)
