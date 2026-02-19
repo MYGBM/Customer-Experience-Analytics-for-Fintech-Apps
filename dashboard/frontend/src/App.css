@@ -1,0 +1,531 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ── Reset & Base ──────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ── Layout ────────────────────────────────────── */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ───────────────────────────────────── */
+.sidebar {
+  width: 220px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-align: center;
+}
+
+.bank-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bank-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ccc;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.bank-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.bank-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ── Main Content ──────────────────────────────── */
+.main-content {
+  flex: 1;
+  padding: 28px 32px;
+  overflow-y: auto;
+}
+
+.page-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.header-sub {
+  font-weight: 400;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* ── Glass Card ────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* ── KPI Strip ─────────────────────────────────── */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.kpi-card {
+  text-align: center;
+  padding: 18px 12px;
+}
+
+.kpi-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+}
+
+.kpi-label {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+  display: block;
+}
+
+/* ── Charts Row ────────────────────────────────── */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 18px;
+  margin: 20px 0;
+}
+
+.chart-card {
+  min-height: 260px;
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ddd;
+  margin-bottom: 12px;
+}
+
+.bar-wrapper {
+  height: 220px;
+}
+
+.donut-wrapper {
+  position: relative;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut-center {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.donut-total {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.donut-label {
+  font-size: 0.7rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+/* ── Pain Points & Drivers ─────────────────────── */
+.pain-drivers-section {
+  margin: 24px 0;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+.section-subtitle {
+  font-weight: 400;
+  color: #888;
+  font-size: 0.82rem;
+}
+
+.pain-drivers-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.pain-driver-card {
+  padding: 18px;
+}
+
+.pd-bank-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.pd-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 0.72rem;
+  color: #999;
+}
+
+.pd-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.pd-dot.pd-red {
+  background: #e74c3c;
+}
+
+.pd-dot.pd-green {
+  background: #2ecc71;
+}
+
+/* ── Reviews Explorer ──────────────────────────── */
+.reviews-explorer {
+  margin-top: 24px;
+}
+
+.reviews-explorer > h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+/* ── Theme Card (Accordion) ────────────────────── */
+.theme-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.theme-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.theme-card-header:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.theme-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.theme-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.theme-count {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.theme-badge {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.badge-positive {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+}
+
+.badge-negative {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+}
+
+.chevron {
+  color: #666;
+  font-size: 0.7rem;
+  transition: transform 0.25s;
+}
+
+.chevron.open {
+  transform: rotate(90deg);
+}
+
+.theme-card-body {
+  padding: 0 18px 14px;
+}
+
+/* ── Tabs ──────────────────────────────────────── */
+.tab-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tab-btn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #aaa;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tab-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn.active {
+  color: #fff;
+  font-weight: 600;
+}
+
+.tab-btn.tab-positive.active {
+  background: rgba(46, 204, 113, 0.18);
+  border-color: #2ecc71;
+}
+
+.tab-btn.tab-negative.active {
+  background: rgba(231, 76, 60, 0.18);
+  border-color: #e74c3c;
+}
+
+/* ── Review Row ────────────────────────────────── */
+.review-row {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.review-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.review-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.review-stars {
+  color: #f1c40f;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.sentiment-pill {
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.review-bank {
+  font-size: 0.72rem;
+  color: #888;
+}
+
+.confidence-bar-wrapper {
+  margin: 4px 0 8px;
+}
+
+.confidence-label {
+  font-size: 0.68rem;
+  color: #888;
+  margin-bottom: 3px;
+}
+
+.confidence-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  max-width: 200px;
+}
+
+.confidence-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.review-text {
+  font-size: 0.82rem;
+  color: #bbb;
+  line-height: 1.5;
+  max-height: 3em;
+  overflow: hidden;
+  transition: max-height 0.3s;
+}
+
+.review-text.expanded {
+  max-height: 1000px;
+}
+
+/* ── Pagination ────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.pagination button {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.pagination button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+/* ── Utilities ─────────────────────────────────── */
+.loading-text {
+  color: #888;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 20px;
+}
+
+.empty-text {
+  color: #666;
+  font-size: 0.82rem;
+  text-align: center;
+  padding: 14px;
+}
+
+/* ── Responsive ────────────────────────────────── */
+@media (max-width: 900px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 14px;
+  }
+
+  .bank-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pain-drivers-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
