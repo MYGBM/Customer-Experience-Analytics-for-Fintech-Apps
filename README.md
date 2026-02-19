@@ -31,20 +31,36 @@ Customer-Experience-Analytics-for-Fintech-Apps/
 │       │   ├── pages/          # Dashboard Pages
 │       │   └── App.jsx         # Main App Component
 │       └── package.json        # Frontend Dependencies
+├── dashboard-screenshots/
+│   └── all-banks.png             #  All banks Dashboard Screenshot
+│   └── per-bank.png             #  Per bank Dashboard Screenshot
+│   └── reviews-explorer-negative-reviews.png             #  Negative reviews Dashboard Screenshot
+│   └── reviews-explorer-positive-reviews.png             #  Positive reviews Dashboard Screenshot
+|   └── reviews-explorer-pagination.png             #  Reviews explorer pagination Dashboard screenshot
 ├── notebooks/                  # Analysis Notebooks (Run in Order)
 │   ├── 1_scrape_data.ipynb     # Data Collection
-│   ├── 2_vader_sentiment.ipynb # Baseline Sentiment Analysis
-│   ├── 3_twitter_roberta.ipynb # Advanced Sentiment Analysis
-│   ├── 4_theme_analysis_lda.ipynb # Topic Modeling
-│   └── 5_insight.ipynb         # Final Insights & Visualization Generation
+│   ├── 2_vader_sentiment.ipynb # Baseline Sentiment Analysis(initial attempt not used for final analysis)
+│   ├── 3_bert_sentiment_analysis.ipynb  # BERT Sentiment Analysis(Experimental not used for final analysis)
+│   ├── 4_twitter_sentiment_analysis.ipynb # Advanced Sentiment Analysis(final model used for analysis)
+│   ├── 5_theme_analysis.ipynb # LDA Topic Modeling(final model used for analysis)
+│   ├── 6_theme_analysis.ipynb # Rule Based Topic Modeling(Experimental not used for final analysis)
+│   └── 7_insight.ipynb         # Final Insights & Visualization Generation
 ├── src/                        # Core Python Modules
 │   ├── scraper.py              # PlayStoreScraper Class
+│   ├── preprocessing.py   # Preprocessing Pipeline
 │   ├── sentiment_twitter.py    # RoBERTa Pipeline
+│   ├── sentiment_vader.py    # VADER Pipeline
+│   ├── sentiment_bert.py    # BERT Pipeline
 │   ├── theme_analysis_lda.py   # LDA Implementation
+│   ├── theme_analysis.py # Rule Based Topic Modeling
 │   ├── insight_visualizations.py # Visualization Logic
 │   └── config.py               # Configuration Settings
 ├── reports/                    # Generated Reports
 │   └── report.md               # Comprehensive Final Report
+│   └── Comprehensive_Report.pdf           # Comprehensive Final Report in pdf format with plots and visualizations.
+├── scripts/
+│   └── insert_reviews.py          # Reviews Data insertion into database
+│   └── schema.sql   # Database Schema
 ├── requirements.txt            # Python Dependencies
 └── README.md                   # Project Documentation
 ```
