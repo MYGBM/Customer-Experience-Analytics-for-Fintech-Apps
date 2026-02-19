@@ -186,19 +186,71 @@ Functionality: A scatter plot mapping Theme Volume vs. Mean Sentiment.
 Purpose: Instantly identifies "Critical Quadrant" issues (High Volume, Negative Sentiment) for immediate engineering triage.
 Dynamic Filtering
 
-Functionality: Global state management allows users to toggle analysis between CBE, Abyssinia, and Dashen Bank instantly, updating all charts via efficient SQL queries. 8. Recommendations
-Based on the data-driven insights, the following strategic actions are proposed:
+Functionality: Global state management allows users to toggle analysis between CBE, Abyssinia, and Dashen Bank instantly, updating all charts via efficient SQL queries. ## 8. Insights & Recommendations
 
-For Commercial Bank of Ethiopia (CBE)
-Immediate: overhaul the app update mechanism. Implement Staged Rollouts (1% -> 5% -> 100%) to catch "crash-on-launch" bugs before they hit the entire 8,000+ reviewer base.
-Short-Term: Invest in Automated UI Testing for the login flow to prevent the "Incorrect Password" false positives.
-For Abyssinia Bank (Apollo)
-Immediate: Audit the SMS Gateway Provider. The "OTP" bottleneck is a vendor reliability issue, not an app code issue. Switch to a higher-reliability tier or add WhatsApp OTP as a fallback.
-Short-Term: Simplify eKYC. The "Selfie/ID" capture has high friction; consider integrating a third-party ID verification SDK with better edge detection.
-For Dashen Bank (Amole)
-Immediate: diverse the System Architecture for high-frequency low-value transactions (Airtime). Decouple this service so that a failure here doesn't impact core banking.
-Short-Term: Double down on the Lifestyle Strategy. The "Concert/Ticket" feature is a winner. Expand this ecosystem to include more utility payments and event partners. 9. Conclusion
-This project has successfully democratized the "Voice of the Customer" for Ethiopian fintechs. By looking beyond the star rating, the project has:
+### Abyssinia Bank
+
+| Category         | Finding                                   | Evidence                                                                                                                   |
+| :--------------- | :---------------------------------------- | :------------------------------------------------------------------------------------------------------------------------- |
+| **Pain Point 1** | App crashes and instability               | ~45% of reviews fall under the _App Stability & Crashes_ theme; strongly negative sentiment                                |
+| **Pain Point 2** | Developer Options Blocking                | Users even with developer mode off are locked out of the app; very negative sentiment                                      |
+| **Pain Point 3** | OTP doesn't automatically allow for entry | very few 5% reviews are strongly complaining about having no manual OTP entry as the automatic one doesn't work.           |
+| **Driver 1**     | UI/UX Design and Usability                | 200+ reviews/ 18% of reviews praise Abyssinia's UI but this will only be a true driver once the pain points are dealt with |
+
+**Recommendations:**
+
+1.  **Invest in crash analytics & hotfix pipeline** — the app’s reliability is critically undermining user trust. Implement robust crash reporting (e.g., Firebase Crashlytics) and prioritize stability releases.
+2.  **Remove or rework the developer-options block** — this is an anti-pattern that frustrates power users and developers. Use alternative security measures instead.
+3.  **Optimize the OTP flow** — simplify and speed up OTP input by allowing manual entry.
+4.  **Opportunity CBE as aspirational benchmark** — ~20% of reviews reference CBE as a model to follow. While the sentiment is negative about Abyssinia, the constructive nature of this feedback provides a clear roadmap — users are essentially telling developers exactly what features and quality standards they expect.
+
+### Commercial Bank of Ethiopia (CBE)
+
+| Category         | Finding                              | Evidence                                                                                                                  |
+| :--------------- | :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
+| **Pain Point 1** | Update-Induced App Instability       | After major updates, users report crashes and sync issues                                                                 |
+| **Pain Point 2** | Numpad/UI Redesign After Update      | Pin input numpad was changed in an update, causing confusion and negative feedback                                        |
+| **Driver 1**     | General Ease of Use                  | ~50% of reviews praise the app's simplicity and user-friendliness                                                         |
+| **Driver 2**     | Transaction History & Account Access | Users value the seamless transaction experience however due to updates users are unable to see older transaction history. |
+
+**Recommendations:**
+
+1.  **Staged rollout & beta testing** — implement feature flags and gradual rollouts to catch update issues before they reach all users.
+2.  **Revert or offer choice on numpad layout and ability to see older transactions** — the redesign broke user muscle memory. Allow users to select their preferred layout. Also allow users to see their old transaction history that was available before the update.
+3.  **Maintain simplicity as a differentiator** — CBE's ease-of-use is a competitive advantage over other banks. Avoid feature bloat.
+
+### Dashen Bank
+
+| Category         | Finding                                                           | Evidence                                                                  |
+| :--------------- | :---------------------------------------------------------------- | :------------------------------------------------------------------------ |
+| **Pain Point 1** | Transaction Failures & Freezing                                   | Users experience freezes during transfers and bill payments               |
+| **Pain Point 2** | Security & Authentication Gaps (incl. Developer Options Blocking) | Login issues because of OTP , and developer-mode blocking                 |
+| **Driver 1**     | All-in-One Super App Experience                                   | ~50% of reviews praise the comprehensive feature set                      |
+| **Driver 2**     | Speed & Reliability (when working)                                | Users appreciate fast transaction processing when the app works correctly |
+
+**Recommendations:**
+
+1.  **Improve transaction resilience** — implement retry logic, optimistic UI, and clear error messages when transfers fail.
+2.  **Modernize authentication** — replace developer-options blocking with biometric authentication or device attestation or two factor authentication for higher security.
+3.  **Leverage the super-app brand** — continue adding utility features (bill pay, airtime, etc.) that keep users within the Dashen ecosystem.
+
+### Cross-Bank Comparison
+
+| Dimension                      | CBE                | Abyssinia                 | Dashen               |
+| :----------------------------- | :----------------- | :------------------------ | :------------------- |
+| **Dominant sentiment**         | Positive           | Negative                  | Positive             |
+| **Top driver**                 | Ease of Use        | UI Design                 | Super App Experience |
+| **Top pain point**             | Update Instability | App Crashes               | Transaction Failures |
+| **Unique issue**               | Numpad redesign    | Competitor envy (CBE)     | Security gaps        |
+| **Developer Options Blocking** | Present            | Present (strong negative) | Present (negative)   |
+
+**Key Takeaways:**
+
+- **CBE** leads in user satisfaction but must manage update quality carefully.
+- **Abyssinia** has the most critical issues — stability must be the #1 engineering priority.
+- **Dashen** sits in the middle — strong brand but needs reliability improvements for security and transactions.
+- **Developer Options Blocking even when developer mode is off** is a shared anti-pattern across Abyssinia and Dashen that should be eliminated industry-wide. 9. Conclusion
+  This project has successfully democratized the "Voice of the Customer" for Ethiopian fintechs. By looking beyond the star rating, the project has:
 
 Quantified the exact cost of technical debt (e.g., CBE's update crashes).
 Identified the unique competitive advantages of each player (Dashen's ecosystem, Abyssinia's design).
