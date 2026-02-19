@@ -2,7 +2,7 @@ Comprehensive Project Report: Customer Experience Analytics for Ethiopian Fintec
 Date: February 2026 Prepared for: Strategic Management Teams of CBE, Abyssinia Bank, and Dashen Bank Prepared by: CX Analytics Team
 
 1. Executive Summary
-This report presents the findings of a comprehensive Customer Experience (CX) Analytics project aimed at transforming unstructured user feedback into actionable strategic insights for Ethiopia's leading fintech applications: Commercial Bank of Ethiopia (CBE), Abyssinia Bank, and Dashen Bank.
+   This report presents the findings of a comprehensive Customer Experience (CX) Analytics project aimed at transforming unstructured user feedback into actionable strategic insights for Ethiopia's leading fintech applications: Commercial Bank of Ethiopia (CBE), Abyssinia Bank, and Dashen Bank.
 
 In an increasingly competitive digital banking landscape, understanding user sentiment beyond simple star ratings is concise. This project engaged in a rigorous end-to-end data science pipeline, migrating from traditional rule-based sentiment analysis to state-of-the-art Deep Learning models.
 
@@ -15,13 +15,13 @@ Business Impact: Identified that while all banks suffer from technical debt, Das
 The insights detailed herein are delivered via a deployed interactive dashboard, empowering stakeholders to monitor real-time user sentiment and prioritize engineering efforts based on quantitative evidence.
 
 2. Methodology & Data Acquisition
-2.1 Data Collection Pipeline
-The foundation of this study is a custom-built scraping pipeline designed to harvest "Voice of the Customer" data directly from the source.
+   2.1 Data Collection Pipeline
+   The foundation of this study is a custom-built scraping pipeline designed to harvest "Voice of the Customer" data directly from the source.
 
 Source: Google Play Store.
-Tooling: Python google_play_scraper library with a custom 
+Tooling: Python google_play_scraper library with a custom
 PlayStoreScraper
- class (
+class (
 src/scraper.py
 ).
 Scope:
@@ -30,13 +30,12 @@ Apollo (Bank of Abyssinia): ~1,200 reviews.
 Amole (Dashen Bank): ~770 reviews.
 Data Integrity: The pipeline implements a retry mechanism with exponential backoff to handle network intermittency, ensuring complete data retrieval. Reviews were sorted by Sort.NEWEST to prioritize recent feedback and relevant app versions.
 2.2 Data Preprocessing
-Raw text data is noisy. We implemented a multi-stage preprocessing pipeline to ensure analytical rigor:
+Raw text data is noisy. A multi-stage preprocessing pipeline was implemented to ensure analytical rigor:
 
 Noise Reduction: Removal of special characters and HTML artifacts.
 Demojization: Converting emojis (e.g., "😡") into text descriptions (":pouting_face:") to preserve their strong emotional signal for the sentiment models.
-Normalization: Lowercasing and standardizing text for consistent tokenization.
-3. Advanced Sentiment Analysis
-A core objective was to accurately quantify user sentiment. We evaluated two distinct approaches to determine the optimal solution for financial text analysis.
+Normalization: Lowercasing and standardizing text for consistent tokenization. 3. Advanced Sentiment Analysis
+A core objective was to accurately quantify user sentiment. Two distinct approaches were evaluated to determine the optimal solution for financial text analysis.
 
 3.1 Baseline: VADER (Rule-Based Approach)
 Initial analysis utilized VADER (Valence Aware Dictionary and sEntiment Reasoner).
@@ -47,23 +46,23 @@ Overall Accuracy: 66.2%
 Negative Recall: 40.5%
 Limitations: The low negative recall indicates that VADER missed nearly 60% of critical user complaints. It failed to grasp context, often classifying "I can't login" as Neutral because it lacks explicitly negative adjectives.
 3.2 Advanced: Twitter-RoBERTa (Transformer Model)
-To overcome VADER's limitations, we deployed cardiffnlp/twitter-roberta-base-sentiment-latest, a Transformer model pre-trained on ~58 million tweets.
+To overcome VADER's limitations, cardiffnlp/twitter-roberta-base-sentiment-latest, a Transformer model pre-trained on ~58 million tweets, was deployed.
 
 Mechanism: Uses attention mechanisms to understand the context of words. It recognizes that "waiting forever" is negative, even without "bad" words.
 Key Metrics:
 Overall Accuracy: 72.1% (+5.9% improvement)
 Negative Recall: 71.5% (+31% improvement)
 Score-Rating Correlation: 0.705 (Strong positive correlation)
-Impact: The massive improvement in Negative Recall is critical. It means we now successfully flag the vast majority of user complaints, ensuring no critical bug report goes unnoticed.
+Impact: The massive improvement in Negative Recall is critical. It means the vast majority of user complaints are now successfully flagged, ensuring no critical bug report goes unnoticed.
 Visual Evidence:
 
 [Placeholder: Comparative Bar Chart - VADER vs. RoBERTa Accuracy & Recall] The chart would show a side-by-side comparison highlighting the drastic jump in detecting negative sentiment.
 
 4. Thematic Analysis: Uncovering the "Why"
-Knowing that users are unhappy is not enough; we must know why. We employed Latent Dirichlet Allocation (LDA), an unsupervised machine learning technique, to discover the hidden thematic structures within the reviews.
+   Knowing that users are unhappy is not enough; the "why" must be understood. Latent Dirichlet Allocation (LDA), an unsupervised machine learning technique, was employed to discover the hidden thematic structures within the reviews.
 
 4.1 LDA Optimization
-Instead of a "one size fits all" model, we trained separate LDA models for each bank to capture their unique product landscapes. We used Coherence Scores ($C_v$) to scientifically determine the optimal number of topics for each:
+Instead of a "one size fits all" model, separate LDA models were trained for each bank to capture their unique product landscapes. Coherence Scores ($C_v$) were used to scientifically determine the optimal number of topics for each:
 
 Abyssinia: Optimal Topics = 8 (High complexity, diverse feedback)
 CBE: Optimal Topics = 5 (Focused on core banking functions)
@@ -83,16 +82,16 @@ Keywords: good, best, cbe, nice, thank, service, easy
 Insight: When the app works, users appreciate its utility and "nice" interface.
 Abyssinia Bank (Apollo)
 Theme 1: Transaction Performance
-Keywords: transaction, transfer, money, fail, account, 
+Keywords: transaction, transfer, money, fail, account,
 bank
 Insight: High friction in money transfers. "Failed" is a dominant term co-occurring with "money".
 Theme 2: Verification Friction
-Keywords: verification, 
+Keywords: verification,
 id
 , photo, selfie, camera, document
 Insight: The digital onboarding process (eKYC) is a major hurdle. Users report issues with the camera not capturing ID documents clearly.
 Theme 3: Modern UI/UX
-Keywords: love, interface, smooth, modern, fast, 
+Keywords: love, interface, smooth, modern, fast,
 app
 Insight: Strong praise for the aesthetic and "smooth" feel of the app, verifying their design-first strategy.
 Dashen Bank (Amole)
@@ -100,15 +99,14 @@ Theme 1: The "Super App" Experience
 Keywords: amole, pay, ticket, concert, buy, everything
 Insight: Users view Amole not just as a bank, but a lifestyle app for buying tickets and paying bills.
 Theme 2: Airtime & System Errors
-Keywords: airtime, buy, card, system, 
+Keywords: airtime, buy, card, system,
 connection
 , error
-Insight: Buying mobile airtime is a high-frequency use case that frequently fails, causing immediate frustration.
-5. Strategic Insights & Prioritization
-By combining Sentiment Scores (from RoBERTa) with Topic Volume (from LDA), we developed a Prioritization Matrix to guide engineering efforts.
+Insight: Buying mobile airtime is a high-frequency use case that frequently fails, causing immediate frustration. 5. Strategic Insights & Prioritization
+By combining Sentiment Scores (from RoBERTa) with Topic Volume (from LDA), a Prioritization Matrix was developed to guide engineering efforts.
 
 5.1 The "Pain Points" vs. "Drivers" Analysis
-We mapped every theme to a quadrant based on its Volume (Frequency) and Mean Sentiment.
+Every theme was mapped to a quadrant based on its Volume (Frequency) and Mean Sentiment.
 
 Quadrant I: Critical Priorities (High Volume, Negative Sentiment)
 These are the "Bleeding/Burning" issues that drive churn.
@@ -132,7 +130,7 @@ Consistently Negative: "Customer Support" related keywords (call, branch, answer
 [Placeholder: Sentiment Heatmap by Theme] A heatmap showing the intensity of negative/positive sentiment for each theme across the three banks.
 
 6. Database Architecture & Data Pipeline
-To support the high-performance dashboard, a robust relational database architecture was implemented, moving beyond static CSV files.
+   To support the high-performance dashboard, a robust relational database architecture was implemented, moving beyond static CSV files.
 
 6.1 Schema Design (
 scripts/schema.sql
@@ -140,11 +138,11 @@ scripts/schema.sql
 A Normalized PostgreSQL schema was designed to enforce data integrity and query efficiency:
 
 banks
- Table: Stores metadata for each financial institution (CBE, Abyssinia, Dashen), acting as the primary reference entity.
+Table: Stores metadata for each financial institution (CBE, Abyssinia, Dashen), acting as the primary reference entity.
 reviews
- Table: The core fact table containing:
+Table: The core fact table containing:
 Metadata: review_text, rating, review_date, thumbs_up.
-NLP Enriched Data: sentiment_score, sentiment_label, 
+NLP Enriched Data: sentiment_score, sentiment_label,
 theme
 , topic_confidence.
 Indexing Strategy: B-Tree indexes were created on high-cardinality columns used for filtering (bank_id, review_date, sentiment_label) to ensure sub-millisecond query performance for the dashboard.
@@ -159,16 +157,18 @@ reviews_with_themes_lda.csv
 Transformation:
 Maps string-based bank names to foreign key bank_ids.
 Converts timestamps and handles missing values.
-Loading: Uses psycopg2.extras.execute_values for high-speed bulk insertion, capable of loading thousands of reviews in seconds while handling conflicts via ON CONFLICT DO NOTHING.
-7. Dashboard Implementation
+Loading: Uses psycopg2.extras.execute_values for high-speed bulk insertion, capable of loading thousands of reviews in seconds while handling conflicts via ON CONFLICT DO NOTHING. 7. Dashboard Implementation
 The insights pipeline culminates in a deployed interactive dashboard.
 
-6.1 Tech Stack
+### 7.1 Tech Stack
+
 Frontend: React (Vite) with Chart.js for responsive, high-performance visualizations.
 Backend: FastAPI for high-speed, asynchronous data serving.
 Database: PostgreSQL for robust structured data storage.
-6.2 Key Features & Technical Implementation
-To support granular analysis, we implemented specialized API endpoints and visualization components:
+
+### 7.2 Key Features & Technical Implementation
+
+To support granular analysis, specialized API endpoints and visualization components were implemented:
 
 Sentiment Trend Analysis (New)
 
@@ -186,9 +186,8 @@ Functionality: A scatter plot mapping Theme Volume vs. Mean Sentiment.
 Purpose: Instantly identifies "Critical Quadrant" issues (High Volume, Negative Sentiment) for immediate engineering triage.
 Dynamic Filtering
 
-Functionality: Global state management allows users to toggle analysis between CBE, Abyssinia, and Dashen Bank instantly, updating all charts via efficient SQL queries.
-8. Recommendations
-Based on the data-driven insights, we propose the following strategic actions:
+Functionality: Global state management allows users to toggle analysis between CBE, Abyssinia, and Dashen Bank instantly, updating all charts via efficient SQL queries. 8. Recommendations
+Based on the data-driven insights, the following strategic actions are proposed:
 
 For Commercial Bank of Ethiopia (CBE)
 Immediate: overhaul the app update mechanism. Implement Staged Rollouts (1% -> 5% -> 100%) to catch "crash-on-launch" bugs before they hit the entire 8,000+ reviewer base.
@@ -198,9 +197,8 @@ Immediate: Audit the SMS Gateway Provider. The "OTP" bottleneck is a vendor reli
 Short-Term: Simplify eKYC. The "Selfie/ID" capture has high friction; consider integrating a third-party ID verification SDK with better edge detection.
 For Dashen Bank (Amole)
 Immediate: diverse the System Architecture for high-frequency low-value transactions (Airtime). Decouple this service so that a failure here doesn't impact core banking.
-Short-Term: Double down on the Lifestyle Strategy. The "Concert/Ticket" feature is a winner. Expand this ecosystem to include more utility payments and event partners.
-9. Conclusion
-This project has successfully democratized the "Voice of the Customer" for Ethiopian fintechs. By looking beyond the star rating, we have:
+Short-Term: Double down on the Lifestyle Strategy. The "Concert/Ticket" feature is a winner. Expand this ecosystem to include more utility payments and event partners. 9. Conclusion
+This project has successfully democratized the "Voice of the Customer" for Ethiopian fintechs. By looking beyond the star rating, the project has:
 
 Quantified the exact cost of technical debt (e.g., CBE's update crashes).
 Identified the unique competitive advantages of each player (Dashen's ecosystem, Abyssinia's design).

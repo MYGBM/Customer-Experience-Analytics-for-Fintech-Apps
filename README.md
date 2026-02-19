@@ -1,5 +1,7 @@
 # Customer Experience Analytics for Fintech Apps
 
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg) ![FastAPI](https://img.shields.io/badge/FastAPI-0.95+-009688.svg?style=flat&logo=fastapi&logoColor=white) ![React](https://img.shields.io/badge/React-18.2.0-61DAFB.svg?style=flat&logo=react&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-5.0+-646CFF.svg?logo=vite&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.0+-4169E1.svg?logo=postgresql&logoColor=white) ![Gensim](https://img.shields.io/badge/Gensim-4.0+-brightgreen.svg) ![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-Hugging%20Face-yellow.svg) ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 **End-to-End Sentiment & Thematic Analysis for Ethiopian Banking Apps**
 
 This project provides a comprehensive analytics platform to understand user feedback for **Commercial Bank of Ethiopia (CBE)**, **Abyssinia Bank (Apollo)**, and **Dashen Bank (Amole)**. It moves beyond simple star ratings to extract detailed insights using advanced NLP techniques (Twitter-RoBERTa) and unsupervised learning (LDA).
